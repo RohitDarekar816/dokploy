@@ -1,0 +1,10 @@
+
+services:
+  dokploy:
+    environment:
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+    volumes:
+      - /etc/dokploy/postgres_password:/run/secrets/postgres_password:ro
+    extra_hosts:
+      - dokploy-postgres:172.18.0.2
+      - dokploy-redis:172.18.0.3

@@ -1,0 +1,63 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: dokploy
+      POSTGRES_DB: dokploy
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - dokploy-postgres:/var/lib/postgresql/data
+    networks:
+      dokploy:
+        aliases:
+          - dokploy-postgres
+
+  redis:
+    image: redis:7
+    volumes:
+      - dokploy-redis:/data
+    networks:
+      dokploy:
+        aliases:
+          - dokploy-redis
+
+  dokploy:
+    image: ${DOKPLOY_IMAGE}
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - ADVERTISE_ADDR=${ADVERTISE_ADDR}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/dokploy:/etc/dokploy
+      - dokploy:/root/.docker
+    ports:
+      - "3000:3000"
+    networks:
+      - dokploy
+
+  traefik:
+    image: traefik:v3.6.7
+    restart: always
+    volumes:
+      - /etc/dokploy/traefik/traefik.yml:/etc/traefik/traefik.yml
+      - /etc/dokploy/traefik/dynamic:/etc/dokploy/traefik/dynamic
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - dokploy
+
+volumes:
+  dokploy-postgres:
+  dokploy-redis:
+  dokploy:
+
+networks:
+  dokploy:
+    driver: bridge
