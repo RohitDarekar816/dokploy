@@ -43,6 +43,8 @@ export * from "./services/registry";
 export * from "./services/rollbacks";
 export * from "./services/schedule";
 export * from "./services/security";
+export * from "./services/digital-ocean";
+export * from "./services/platform-provisioning";
 export * from "./services/server";
 export * from "./services/settings";
 export * from "./services/ssh-key";

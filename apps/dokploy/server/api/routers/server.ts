@@ -2,9 +2,11 @@ import {
 	createServer,
 	defaultCommand,
 	deleteServer,
+	doDeleteDroplet,
 	findServerById,
 	findServersByUserId,
 	findUserById,
+	getDigitalOceanToken,
 	getPublicIpWithFallback,
 	haveActiveServices,
 	IS_CLOUD,
@@ -420,6 +422,19 @@ export const serverRouter = createTRPCRouter({
 					resourceId: currentServer.serverId,
 					resourceName: currentServer.name,
 				});
+
+				if (currentServer.providerServerId) {
+					const doToken = await getDigitalOceanToken(
+						currentServer.organizationId,
+					);
+					if (doToken) {
+						await doDeleteDroplet(
+							doToken,
+							Number(currentServer.providerServerId),
+						);
+					}
+				}
+
 				await removeDeploymentsByServerId(currentServer);
 				await deleteServer(input.serverId);
 

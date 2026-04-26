@@ -1,5 +1,7 @@
 import { createTRPCRouter } from "../api/trpc";
 import { adminRouter } from "./routers/admin";
+import { digitalOceanRouter } from "./routers/digital-ocean";
+import { platformRouter } from "./routers/platform";
 import { aiRouter } from "./routers/ai";
 import { applicationRouter } from "./routers/application";
 import { backupRouter } from "./routers/backup";
@@ -63,6 +65,8 @@ export const appRouter = createTRPCRouter({
 	compose: composeRouter,
 	deployment: deploymentRouter,
 	destination: destinationRouter,
+	digitalOcean: digitalOceanRouter,
+	platform: platformRouter,
 	docker: dockerRouter,
 	domain: domainRouter,
 	gitea: giteaRouter,

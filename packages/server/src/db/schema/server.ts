@@ -51,6 +51,7 @@ export const server = pgTable("server", {
 	sshKeyId: text("sshKeyId").references(() => sshKeys.sshKeyId, {
 		onDelete: "set null",
 	}),
+	providerServerId: text("providerServerId"),
 	metricsConfig: jsonb("metricsConfig")
 		.$type<{
 			server: {

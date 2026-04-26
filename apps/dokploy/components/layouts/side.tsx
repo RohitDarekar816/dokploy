@@ -22,6 +22,7 @@ import {
 	House,
 	Key,
 	KeyRound,
+	LayoutDashboard,
 	Loader2,
 	LogIn,
 	type LucideIcon,
@@ -160,6 +161,12 @@ const MENU: Menu = {
 			title: "Projects",
 			url: "/dashboard/projects",
 			icon: Folder,
+		},
+		{
+			isSingle: true,
+			title: "Platform",
+			url: "/platform",
+			icon: LayoutDashboard,
 		},
 		{
 			isSingle: true,

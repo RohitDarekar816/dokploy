@@ -42,6 +42,7 @@ import { ShowNodesModal } from "../cluster/nodes/show-nodes-modal";
 import { TerminalModal } from "../web-server/terminal-modal";
 import { ShowServerActions } from "./actions/show-server-actions";
 import { HandleServers } from "./handle-servers";
+import { LaunchDigitalOceanServer } from "./launch-digitalocean-server";
 import { SetupServer } from "./setup-server";
 import { ShowDockerContainersModal } from "./show-docker-containers-modal";
 import { ShowMonitoringModal } from "./show-monitoring-modal";
@@ -116,7 +117,14 @@ export const ShowServers = () => {
 													Start adding servers to deploy your applications
 													remotely.
 												</span>
-												{permissions?.server.create && <HandleServers />}
+												{permissions?.server.create && (
+													<div className="flex flex-row gap-2 flex-wrap justify-center">
+														<HandleServers />
+														<LaunchDigitalOceanServer
+															onServerCreated={refetch}
+														/>
+													</div>
+												)}
 											</div>
 										) : (
 											<div className="flex flex-col gap-4 min-h-[25vh]">
@@ -440,9 +448,12 @@ export const ShowServers = () => {
 												{permissions?.server.create && (
 													<div className="flex flex-row gap-2 flex-wrap w-full justify-end mt-4">
 														{data && data?.length > 0 && (
-															<div>
+															<>
+																<LaunchDigitalOceanServer
+																	onServerCreated={refetch}
+																/>
 																<HandleServers />
-															</div>
+															</>
 														)}
 													</div>
 												)}

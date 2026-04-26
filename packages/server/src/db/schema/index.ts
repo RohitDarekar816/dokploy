@@ -1,5 +1,6 @@
 export * from "./account";
 export * from "./ai";
+export * from "./digital-ocean";
 export * from "./application";
 export * from "./audit-log";
 export * from "./backups";
@@ -41,3 +42,4 @@ export * from "./user";
 export * from "./utils";
 export * from "./volume-backups";
 export * from "./web-server-settings";
+export * from "./platform";
